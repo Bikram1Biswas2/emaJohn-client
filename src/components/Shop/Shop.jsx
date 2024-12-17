@@ -9,6 +9,7 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([])
     const [itemsPerPage, setItemsPerPage] = useState(10)
+    const [currentPage,setCurrentPage] = useState(0)
     const {count} = useLoaderData()
     const numberOfPages = Math.ceil(count/itemsPerPage)
     const pages = [...Array(numberOfPages).keys()]
@@ -68,6 +69,19 @@ const Shop = () => {
     const handleChangePerPage = e =>{
         const val = parseInt(e.target.value)
         setItemsPerPage(val)
+        setCurrentPage(0)
+    }
+
+    const handlePreviousPage = ()=>{
+        if(currentPage>0){
+            setCurrentPage(currentPage-1)
+        }
+    }
+
+    const handleNextPage = ()=>{
+        if( currentPage < pages.length - 1){
+            setCurrentPage(currentPage+1)
+        }
     }
 
     return (
@@ -92,10 +106,16 @@ const Shop = () => {
                 </Cart>
             </div>
             <div className='pagination'>
+                <p>{currentPage}</p>
+                <button onClick={handlePreviousPage}>Prev</button>
                 {
-                    pages.map(page=> <button key={page}>{page}</button>)
+                    pages.map(page=> <button
+                        className={currentPage === page && 'selected'}
+                        onClick={()=>setCurrentPage(page)} 
+                        key={page}>{page}</button>)
                 }
-                <select defaultValue={itemsPerPage} onChange={handleChangePerPage} name="" id="">
+                <button onClick={handleNextPage}>Next</button>
+                <select className='select' defaultValue={itemsPerPage} onChange={handleChangePerPage} name="" id="">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>

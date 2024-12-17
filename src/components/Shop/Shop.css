@@ -33,3 +33,11 @@
 .pagination button{
     margin-right: 10px;
 }
+.select{
+    padding: 6px;
+    padding-top: 10px;
+    text-align: center;
+}
+.selected{
+    background-color: #FF9900;
+}
